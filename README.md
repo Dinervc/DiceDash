@@ -7,7 +7,7 @@ On each turn, a player rolls a six-sided dice. If the player rolls a 1, their tu
 If a player reaches a score of 100 or more at the end of their turn, they win the game.
 
 <h3>Features</h3>
-CoolDiceBro game includes the following features:
+Dice Dash includes the following features:
 <li>Simple and intuitive user interface</li>
 <li>Two-player support</li>
 <li>Randomized dice rolls using JavaScript's Math.random() function</li>
@@ -21,7 +21,7 @@ The Pig Dice game was implemented using the following technologies:
 <li>JavaScript</li>
 
 <h3>Future Improvements</h3>
-Some possible improvements to CoolDiceBro include:
+Some possible improvements to Dice Dash include:
 <ul>
 <li>Implementing a scoring system that rewards more points for rolling multiple dice of the same number (e.g., rolling three 4's is worth more than rolling a single 4)</li>
 <li><strike>Allowing the user to customize the winning score or other game parameters</strike><strong>[SOLVED]</strong></li>
@@ -32,4 +32,4 @@ Some possible improvements to CoolDiceBro include:
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 <h3>Acknowledgments</h3>
-CoolDiceBro was inspired by the classic dice game Pig Dice. Thanks to John Scarne who contributed to the development of the original game in 1945.
+Dice Dash was inspired by the classic dice game Pig Dice. Thanks to John Scarne who contributed to the development of the original game in 1945.
