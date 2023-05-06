@@ -58,6 +58,8 @@ function rollDice() {
 
     if (diceValue === 1) {
       roundScore = 0;
+      document.querySelector(".latest-dice-throw i").className =
+        "fa-solid fa-dice-d6";
       updateRoundScoreUI();
       switchPlayers();
       failSound();
@@ -189,11 +191,10 @@ function updateWinningScore() {
 
 function updateDiceMultiplier() {
   multiplier = document.querySelector("#multiplier-select").value;
-  document.querySelector(`.multiplier-in-game`).textContent = `x${multiplier}`;
-  if (gamePlaying) {
-    document.querySelector("#continue-button").classList.remove("hidden");
-  } else {
-    document.querySelector("#continue-button").classList.add("hidden");
+  if (multiplier != 1) {
+    document.querySelectorAll(`.multiplier-in-game`).forEach((element) => {
+      element.textContent = `x${multiplier}`;
+    });
   }
 }
 
