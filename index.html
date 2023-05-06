@@ -25,12 +25,13 @@
 
     <!-- Style Tag -->
     <link rel="stylesheet" href="styles/style.css" />
-    <link rel="icon" type="image/x-icon" href="/resources/diceTexture.png" />
+    <link rel="icon" type="image/x-icon" href="/resources/DiceDash.png" />
 
     <!-- Other Tag -->
     <title>Dice Dash</title>
   </head>
   <body>
+    <!-- Planned LAN feature
     <div class="nav-bar" style="display: none">
       <h1>LAN Game</h1>
       <div id="ip-address"></div>
@@ -47,9 +48,19 @@
       </div>
       <button id="disconnect-btn">Disconnect</button>
     </div>
+    -->
     <div id="main-menu" class="main-menu">
       <div class="menu-content">
-        <h1>Dice Dash - Main Menu</h1>
+        <h1>
+          <img
+            src="resources/DiceDashLogoBlack.png"
+            alt="Dice Dash Logo"
+            width="150"
+            height="75"
+            class="menuLogo"
+          />
+          - Main Menu
+        </h1>
         <canvas id="renderCanvas"></canvas>
         <div class="button-container">
           <button

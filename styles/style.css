@@ -213,7 +213,8 @@ canvas {
 }
 
 .menu-content h1 {
-  margin-top: 0;
+  display: flex;
+  align-items: center;
 }
 
 .button-container {
@@ -238,7 +239,15 @@ canvas {
 }
 
 .hidden {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-out, visibility 0s linear 0.3s;
+  pointer-events: none;
+}
+
+:not(.hidden) {
+  opacity: 1;
+  transition: opacity 0.3s ease-in;
 }
 
 /* Settings Tab */

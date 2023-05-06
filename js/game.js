@@ -1,10 +1,15 @@
 "use strict";
 
 const NUM_PLAYERS = 2;
-const ROLL_ANIMATION_FRAMES = 20;
-const ROLL_ANIMATION_DURATION_MS = 1000;
+const DICE_CLASSES = {
+  2: "two",
+  3: "three",
+  4: "four",
+  5: "five",
+  6: "six",
+};
 
-let WINNING_SCORE = 100;
+let winningScore = 100;
 let currentPlayer = 1;
 let scores = [0, 0];
 let roundScore = 0;
@@ -12,15 +17,6 @@ let gamePlaying = false;
 let diceMesh;
 let multiplier = 1;
 let diceChance = [1, 6];
-
-const diceClasses = {
-  1: "one",
-  2: "two",
-  3: "three",
-  4: "four",
-  5: "five",
-  6: "six",
-};
 
 function newGame() {
   if (scores[0] !== 0 || scores[1] !== 0) {
@@ -32,7 +28,7 @@ function newGame() {
     "fa-solid fa-dice-d6";
   scores = [0, 0];
   roundScore = 0;
-  currentPlayer = 1;
+  currentPlayer = Math.floor(Math.random() * 2) + 1;
   gamePlaying = true;
   highlightCurrentPlayer();
   updateDiceMultiplier();
@@ -42,59 +38,64 @@ function newGame() {
 function rollDice() {
   if (gamePlaying) {
     playDiceSound();
-    const randomNum = Math.random();
-    let diceValue;
 
-    if (randomNum < diceChance[0] / diceChance[1]) {
-      diceValue = 1;
-    } else {
-      diceValue = Math.floor(Math.random() * 5) + 2;
-    }
+    let diceValue = calculateRandomDiceRoll();
 
     document.querySelector(".latest-dice-throw i").className =
-      "fa-solid fa-dice-" + diceClasses[diceValue];
+      "fa-solid fa-dice-" + DICE_CLASSES[diceValue];
 
     roundScore += diceValue * multiplier;
 
-    if (diceValue === 1) {
-      roundScore = 0;
-      document.querySelector(".latest-dice-throw i").className =
-        "fa-solid fa-dice-d6";
-      updateRoundScoreUI();
-      switchPlayers();
-      failSound();
-    } else {
-      updateRoundScoreUI();
-    }
+    consequencesOfRoll(diceValue);
   }
 }
 
-function holdScore() {
-  if (gamePlaying) {
-    if (roundScore === 0) {
-      return;
-    }
-    holdScoreSound();
-    scores[currentPlayer - 1] += roundScore;
-    roundScore = 0;
-    updateScoresUI();
-    if (scores[currentPlayer - 1] >= WINNING_SCORE) {
-      // game over
-      const winner = document.querySelector(`#player${currentPlayer}`);
-
-      winner.classList.add("winner");
-      winner.classList.remove("active");
-
-      document.querySelector(".latest-dice-throw i").className =
-        "fa-solid fa-crown";
-
-      gamePlaying = false;
-    } else {
-      document.querySelector(".latest-dice-throw i").className =
-        "fa-solid fa-dice-d6";
-      switchPlayers();
-    }
+function calculateRandomDiceRoll() {
+  if (Math.random() < diceChance[0] / diceChance[1]) {
+    return 1;
   }
+  return Math.floor(Math.random() * 5) + 2;
+}
+
+function consequencesOfRoll(diceValue) {
+  if (diceValue === 1) {
+    failSound();
+
+    roundScore = 0;
+
+    document.querySelector(".latest-dice-throw i").className =
+      "fa-solid fa-dice-d6";
+    switchPlayers();
+  }
+  updateRoundScoreUI();
+}
+
+function holdScore() {
+  if (roundScore === 0 || !gamePlaying) {
+    return;
+  }
+
+  holdScoreSound();
+
+  scores[currentPlayer - 1] += roundScore;
+  roundScore = 0;
+
+  if (scores[currentPlayer - 1] >= winningScore) {
+    const winner = document.querySelector(`#player${currentPlayer}`);
+
+    winner.classList.add("winner");
+
+    document.querySelector(".latest-dice-throw i").className =
+      "fa-solid fa-crown";
+
+    gamePlaying = false;
+  } else {
+    document.querySelector(".latest-dice-throw i").className =
+      "fa-solid fa-dice-d6";
+    switchPlayers();
+  }
+
+  updateScoresUI();
 }
 
 function switchPlayers() {
@@ -179,7 +180,7 @@ function toggleSettingsTab() {
 
 function updateWinningScore() {
   const value = document.querySelector("#winning-score-input").value;
-  WINNING_SCORE = value;
+  winningScore = value;
   if (value >= 500) {
     document.querySelector("#multiplier-select").options[3].disabled = false;
     document.querySelector("#multiplier-select").value = "1";
