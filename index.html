@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Spiele das berühmte 'Pig Dice' Spiel mit einem JavaScript Programm in deinem Webbrowser!"
+    />
+    <meta name="keywords" content="HTML, CSS, JavaScript" />
+
+    <!-- Script Tags -->
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/47ddd138e9.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/audio.js"></script>
+    <script src="js/animatedCube.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/connection.js"></script>
+
+    <!-- Style Tag -->
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="icon" type="image/x-icon" href="/resources/diceTexture.png" />
+
+    <!-- Other Tag -->
+    <title>Dice Dash</title>
+  </head>
+  <body>
+    <div class="nav-bar" style="display: none">
+      <h1>LAN Game</h1>
+      <div id="ip-address"></div>
+      <button id="wait-btn">Wait for connection</button>
+      <div>
+        <label>Other IP Address:</label>
+        <input type="text" id="other-ip-input" />
+        <button id="connect-btn">Connect</button>
+      </div>
+      <textarea id="log" rows="10" cols="50"></textarea>
+      <div>
+        <button id="send-btn">Send Data</button>
+        <input type="text" id="data-input" />
+      </div>
+      <button id="disconnect-btn">Disconnect</button>
+    </div>
+    <div id="main-menu" class="main-menu">
+      <div class="menu-content">
+        <h1>Dice Dash - Main Menu</h1>
+        <canvas id="renderCanvas"></canvas>
+        <div class="button-container">
+          <button
+            id="continue-button"
+            class="menu-button hidden"
+            onclick="continueGame()"
+          >
+            Continue Game
+          </button>
+          <button
+            id="new-game-button"
+            class="menu-button"
+            onclick="startNewGame()"
+          >
+            New Game
+          </button>
+          <button
+            id="settings-button"
+            class="menu-button"
+            onclick="toggleSettingsTab()"
+          >
+            Settings
+          </button>
+        </div>
+        <div id="settings-tab" class="hidden">
+          <h2>Settings</h2>
+          <label for="winning-score-input">Winning Score:</label>
+          <input
+            type="number"
+            id="winning-score-input"
+            onchange="updateWinningScore()"
+            min="1"
+            max="999"
+            value="100"
+          />
+          <br />
+          <label for="multiplier-select">Multiplier:</label>
+          <select id="multiplier-select" onchange="updateDiceMultiplier()">
+            <option value="1">1x</option>
+            <option value="2">2x</option>
+            <option value="5">5x</option>
+            <option value="10" disabled>
+              10x (Requires Winning Score of 500+)
+            </option>
+          </select>
+          <br />
+          <label for="dice-chances-range">Dice Chances:</label>
+          <input
+            type="range"
+            id="dice-chances-range"
+            min="0"
+            max="3"
+            value="0"
+            onchange="updateOneChance()"
+          />
+          <label id="dice-chances-label">(1/6%)</label>
+        </div>
+        <button
+          id="credit-button"
+          class="menu-button"
+          onclick="displayCredits()"
+        >
+          Credits
+        </button>
+        <div id="credits-tab" class="hidden">
+          <h2>Credits</h2>
+          <ul>
+            <li>Game design by Adrian Petrovic</li>
+            <li>Programming by Adrian Petrovic</li>
+            <li>Artwork by Adrian Petrovic (majority)</li>
+            <li>Sound by YouTube and Pixabay</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <button id="open-menu-button" onclick="toggleMainMenu()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="audio-container">
+        <button onclick="switchSound()">
+          <i class="fa-solid fa-volume-xmark" id="volume-icon"></i>
+        </button>
+      </div>
+    </div>
+    <div class="game">
+      <div class="player-container" id="player1">
+        <input
+          type="text"
+          class="player-name"
+          value="Player 1"
+          maxlength="14"
+        />
+        <p class="score-player">Score: <span class="player-score">0</span></p>
+        <div class="current-score">
+          <p>
+            Turn Score: <span class="player-current-score">0</span
+            ><span class="multiplier-in-game">x1</span>
+          </p>
+        </div>
+      </div>
+      <div class="controls-container">
+        <button title="Neues Spiel" onclick="newGame()" class="btn-new">
+          Neues Spiel
+        </button>
+        <div class="latest-dice-throw">
+          <i class="fa-solid fa-dice-one" style="color: #ffffff"></i>
+        </div>
+        <button title="Würfeln" class="btn-roll" onclick="rollDice()">
+          Würfeln
+        </button>
+        <button title="Halten" class="btn-hold" onclick="holdScore()">
+          Sichern
+        </button>
+      </div>
+      <div class="player-container" id="player2">
+        <input
+          type="text"
+          class="player-name"
+          value="Player 2"
+          maxlength="14"
+        />
+        <p class="score-player">Score: <span class="player-score">0</span></p>
+        <div class="current-score">
+          <p>
+            Turn Score: <span class="player-current-score">0</span
+            ><span class="multiplier-in-game"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
