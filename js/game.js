@@ -28,6 +28,8 @@ function newGame() {
       .querySelector(`#player${currentPlayer}`)
       .classList.remove("winner");
   }
+  document.querySelector(".latest-dice-throw i").className =
+    "fa-solid fa-dice-d6";
   scores = [0, 0];
   roundScore = 0;
   currentPlayer = 1;
@@ -82,10 +84,12 @@ function holdScore() {
       winner.classList.remove("active");
 
       document.querySelector(".latest-dice-throw i").className =
-        "fa-brands fa-apple";
+        "fa-solid fa-crown";
 
       gamePlaying = false;
     } else {
+      document.querySelector(".latest-dice-throw i").className =
+        "fa-solid fa-dice-d6";
       switchPlayers();
     }
   }
