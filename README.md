@@ -13,6 +13,7 @@ Dice Dash includes the following features:
 <li>Randomized dice rolls using JavaScript's Math.random() function</li>
 <li>Turn-based gameplay with the ability to hold and score points</li>
 <li>Win detection and game-over state</li>
+<li>AI enemy using the '4 scoring turns' algorithm</li>
 
 <h3>Technologies Used</h3>
 The Pig Dice game was implemented using the following technologies:
@@ -24,8 +25,8 @@ The Pig Dice game was implemented using the following technologies:
 Some possible improvements to Dice Dash include:
 <ul>
 <li>Implementing a scoring system that rewards more points for rolling multiple dice of the same number (e.g., rolling three 4's is worth more than rolling a single 4)</li>
-<li><strike>Allowing the user to customize the winning score or other game parameters</strike><strong>[SOLVED]</strong></li>
-<li>Creating an AI opponent for single-player gameplay</li>
+<li><strike>Allowing the user to customize the winning score or other game parameters</strike><strong> [SOLVED]</strong></li>
+<li><strike>Creating an AI opponent for single-player gameplay</strike><strong> [SOLVED]</strong></li>
 </ul>
 
 <h3>License</h3>
