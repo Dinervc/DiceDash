@@ -29,12 +29,12 @@ let diceMesh;
 let multiplier = 1;
 let diceChance = [1, 6];
 
-function startNewGame() {
+function startNewGame(igOrIm) {
   newGame();
 
-  toggleMainMenu();
+  igOrIm === "im" ? toggleMainMenu() : null;
   updateTurnScoreUI();
-  updateScoresUI();
+  seeIfBotIsOn();
 }
 
 function newGame() {
@@ -54,7 +54,14 @@ function newGame() {
   updateScoresUI();
 }
 
-function rollDice() {
+function rollDice(kindaPlayer) {
+  if (
+    kindaPlayer == "plyr" &&
+    document.querySelector("#use-bot-toggle").checked &&
+    currentPlayer === 2
+  ) {
+    return;
+  }
   if (gamePlaying) {
     playDiceSound();
 
@@ -65,7 +72,7 @@ function rollDice() {
 
     turnScore += diceValue * multiplier;
 
-    consequencesOfRoll(diceValue);
+    consequencesOfRoll(diceValue, kindaPlayer);
   }
 }
 
@@ -75,7 +82,7 @@ function calculateRandomDiceRoll() {
     : Math.floor(Math.random() * 5) + 2;
 }
 
-function consequencesOfRoll(diceValue) {
+function consequencesOfRoll(diceValue, kindaPlayer) {
   if (diceValue === 1) {
     failSound();
 
@@ -89,8 +96,14 @@ function consequencesOfRoll(diceValue) {
   updateTurnScoreUI();
 }
 
-function holdScore() {
-  if (turnScore === 0 || !gamePlaying) {
+function holdScore(kindaPlayer) {
+  if (
+    turnScore === 0 ||
+    !gamePlaying ||
+    (kindaPlayer == "plyr" &&
+      document.querySelector("#use-bot-toggle").checked &&
+      currentPlayer === 2)
+  ) {
     return;
   }
 
@@ -98,8 +111,10 @@ function holdScore() {
 
   scores[currentPlayer - 1] += turnScore;
   turnScore = 0;
-
+  updateScoresUI();
+  updateTurnScoreUI();
   if (scores[currentPlayer - 1] >= winningScore) {
+    turnScore = 0;
     const winner = document.querySelector(`#player${currentPlayer}`);
     winner.classList.add("winner");
     document.querySelector(".latest-dice-throw i").className =
@@ -116,7 +131,6 @@ function holdScore() {
   document.querySelector(".latest-dice-throw i").className =
     "fa-solid fa-dice-d6";
   switchPlayers();
-  updateScoresUI();
 }
 
 function switchPlayers() {
@@ -124,6 +138,7 @@ function switchPlayers() {
   currentPlayer = currentPlayer === 1 ? 2 : 1;
   highlightCurrentPlayerUI();
   updateTurnScoreUI();
+  seeIfBotIsOn();
 }
 
 function highlightCurrentPlayerUI() {
@@ -224,6 +239,13 @@ function displayCredits() {
 function toggleMainMenu() {
   checkGamePlaying();
   document.querySelector("#main-menu").classList.toggle("hidden");
+  if (document.querySelector("#use-bot-toggle").checked) {
+    document.querySelector("#player2 .player-name").value = "Bot";
+    document.querySelector("#player2 .player-name").disabled = true;
+  } else {
+    document.querySelector("#player2 .player-name").disabled = false;
+    document.querySelector("#player2 .player-name").value = "Player 2";
+  }
   if (!document.querySelector("#settings-tab").classList.contains("hidden")) {
     toggleSettingsTab();
   }
@@ -241,4 +263,41 @@ function toggleMainMenu() {
 function displayInfo() {
   const creditsTab = document.querySelector("#info-tab");
   return creditsTab ? creditsTab.classList.toggle("hidden") : null;
+}
+
+function seeIfBotIsOn() {
+  return currentPlayer === 2 &&
+    document.querySelector("#use-bot-toggle").checked
+    ? initiateBot()
+    : null;
+}
+
+function initiateBot() {
+  if (currentPlayer !== 2) {
+    return;
+  }
+  let remainingTurns = 4 - scores.indexOf(Math.max(...scores));
+  let targetScore =
+    remainingTurns === 1
+      ? winningScore - scores[0]
+      : (winningScore - scores[0]) / remainingTurns;
+  turnScore = 0;
+  botLogic(targetScore);
+}
+
+function botLogic(targetScore) {
+  let i = 0;
+  const rollInterval = setInterval(() => {
+    if (turnScore / multiplier < targetScore && currentPlayer === 2) {
+      rollDice("bot");
+      i++;
+      if (i === 4) {
+        clearInterval(rollInterval);
+        holdScore("bot");
+      }
+    } else {
+      clearInterval(rollInterval);
+      holdScore("bot");
+    }
+  }, 200);
 }

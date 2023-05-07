@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Spiele das berühmte 'Pig Dice' Spiel mit einem JavaScript Programm in deinem Webbrowser!"
+      content="Play the famous 'Pig Dice' game with a JavaScript program in your web browser!"
     />
     <meta name="keywords" content="HTML, CSS, JavaScript" />
 
@@ -73,7 +73,7 @@
           <button
             id="new-game-button"
             class="menu-button"
-            onclick="startNewGame()"
+            onclick="startNewGame('im')"
           >
             New Game
           </button>
@@ -87,6 +87,10 @@
         </div>
         <div id="settings-tab" class="hidden">
           <h2>Settings</h2>
+          <div class="bot-setting">
+            <label for="use-bot-toggle">Play against bot:</label>
+            <input type="checkbox" id="use-bot-toggle" />
+          </div>
           <label for="winning-score-input">Winning Score:</label>
           <input
             type="number"
@@ -162,10 +166,6 @@
           <span>- Info</span>
         </h2>
 
-        <h4>Getting Started</h4>
-        To play the game, simply open the index.html file in your web browser.
-        The game should be playable on any modern web browser.
-
         <h4>How to Play (base settings)</h4>
         On each turn, a player rolls a six-sided dice. If the player rolls a 1,
         their turn ends and they score no points for that turn. If the player
@@ -184,6 +184,7 @@
         <li>Randomized dice rolls using JavaScript's Math.random() function</li>
         <li>Turn-based gameplay with the ability to hold and score points</li>
         <li>Win detection and game-over state</li>
+        <li>AI enemy with only a 3.3% disadvantage against optimal play</li>
 
         <h4>Technologies Used</h4>
         The Pig Dice game was implemented using the following technologies:
@@ -203,7 +204,11 @@
             parameters</strike
           ><strong> [SOLVED]</strong>
         </li>
-        <li>Creating an AI opponent for single-player gameplay</li>
+        <li>
+          <strike>Creating an AI opponent for single-player gameplay</strike>
+          <strong> [SOLVED] </strong> Note: Make sure to keep settings as is for
+          best AI experience!
+        </li>
 
         <h4>License</h4>
         This project is licensed under the MIT License. See the LICENSE file for
@@ -238,17 +243,21 @@
         </div>
       </div>
       <div class="controls-container">
-        <button title="Neues Spiel" onclick="newGame()" class="btn-new">
-          Neues Spiel
+        <button
+          title="Neues Spiel"
+          onclick="startNewGame('ig')"
+          class="btn-new"
+        >
+          New Game
         </button>
         <div class="latest-dice-throw">
           <i class="fa-solid fa-dice-one" style="color: #ffffff"></i>
         </div>
-        <button title="Würfeln" class="btn-roll" onclick="rollDice()">
-          Würfeln
+        <button title="Würfeln" class="btn-roll" onclick="rollDice('plyr')">
+          Roll
         </button>
-        <button title="Halten" class="btn-hold" onclick="holdScore()">
-          Sichern
+        <button title="Halten" class="btn-hold" onclick="holdScore('plyr')">
+          Hold
         </button>
       </div>
       <div class="player-container" id="player2">

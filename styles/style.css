@@ -62,8 +62,11 @@ body {
 }
 
 canvas {
-  margin-top: 20px;
-  width: 30vw;
+  position: absolute;
+  top: 25%;
+  width: 70vw;
+  pointer-events: none;
+  filter: blur(3px);
 }
 
 .button-container {
@@ -93,11 +96,16 @@ canvas {
   padding: 5px;
   border-radius: 20px;
   position: absolute;
-  bottom: 20%;
+  bottom: 35%;
   right: 10%;
 }
 
 #settings-tab h2 {
+  margin-bottom: 10px;
+}
+
+.bot-setting {
+  display: block;
   margin-bottom: 10px;
 }
 
@@ -123,8 +131,8 @@ canvas {
   padding: 5px;
   border-radius: 20px;
   position: absolute;
-  bottom: 10%;
-  right: 28%;
+  bottom: 18%;
+  right: 20%;
 }
 
 #credits-tab h2 {
@@ -328,7 +336,7 @@ canvas {
   margin-bottom: 10%;
   width: 80%;
   height: 10%;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .latest-dice-throw {
@@ -356,6 +364,10 @@ canvas {
   font-size: 25px;
 }
 
+.current-score p {
+  text-align: center;
+}
+
 .player-current-score {
   font-size: 25px;
   border: 2px solid white;
@@ -364,7 +376,6 @@ canvas {
 
 .multiplier-in-game {
   color: rebeccapurple;
-
   font-size: 30px;
   margin-left: 10px;
 }
