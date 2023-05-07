@@ -1,31 +1,25 @@
 const backgroundSound = new Audio("resources/shortenedBackgroundMusic.mp3");
 function switchSound() {
-  if (document.querySelector("#volume-icon").className === "fa-solid fa-volume-high") {
-    document.querySelector("#volume-icon").className = "fa-solid fa-volume-xmark";
-    backgroundSound.pause();
-    return;
+  if (
+    document.querySelector("#volume-icon").className ===
+    "fa-solid fa-volume-high"
+  ) {
+    document.querySelector("#volume-icon").className =
+      "fa-solid fa-volume-xmark";
+    return backgroundSound.pause();
   }
   backgroundSound.play();
   document.querySelector("#volume-icon").className = "fa-solid fa-volume-high";
 }
 
 function playDiceSound() {
-  if (gamePlaying) {
-    const sound = new Audio("resources/rollingDice.mp3");
-    sound.play();
-  }
+  return gamePlaying ? new Audio("resources/rollingDice.mp3").play() : null;
 }
 
 function holdScoreSound() {
-  if (gamePlaying) {
-    const sound = new Audio("resources/holdCheckpoint.mp3");
-    sound.play();
-  }
+  return gamePlaying ? new Audio("resources/holdCheckpoint.mp3").play() : null;
 }
 
 function failSound() {
-  if (gamePlaying) {
-    const sound = new Audio("resources/fail.mp3");
-    sound.play();
-  }
+  return gamePlaying ? new Audio("resources/fail.mp3").play() : null;
 }
