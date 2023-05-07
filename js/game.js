@@ -22,6 +22,7 @@ const CHANCE_VALUES = {
 let winningScore = 100;
 let currentPlayer = 1;
 let scores = [0, 0];
+let points = [0, 0];
 let turnScore = 0;
 let gamePlaying = false;
 let diceMesh;
@@ -104,7 +105,11 @@ function holdScore() {
     document.querySelector(".latest-dice-throw i").className =
       "fa-solid fa-crown";
 
-    updateScoresUI();
+    points[currentPlayer - 1] += 1;
+    document.querySelector(
+      ".player-points"
+    ).textContent = `${points[0]}:${points[1]}`;
+
     return (gamePlaying = false);
   }
 
