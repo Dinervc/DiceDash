@@ -1,4 +1,4 @@
-const ipAddressDiv = document.querySelector("#ip-address");
+/*const ipAddressDiv = document.querySelector("#ip-address");
 const waitBtn = document.querySelector("#wait-btn");
 const connectBtn = document.querySelector("#connect-btn");
 const otherIpInput = document.querySelector("#other-ip-input");
@@ -113,4 +113,4 @@ disconnectBtn.addEventListener("click", function () {
     console.log("Not connected");
     logTextarea.value += "Not connected\n";
   }
-});
+});*/
