@@ -14,20 +14,6 @@ body {
   cursor: default;
 }
 
-button {
-  filter: brightness(80%);
-}
-
-button:hover {
-  filter: brightness(100%);
-  background-color: white;
-  cursor: pointer;
-}
-
-button:active {
-  filter: brightness(60%);
-}
-
 .nav-bar {
   display: flex;
   height: 5vh;
@@ -40,6 +26,153 @@ button:active {
   height: 5vh;
   padding: 0;
   margin: 0;
+}
+
+.main-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+}
+
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-evenly;
+  text-align: center;
+  width: 50%;
+  height: 80%;
+  background-color: gray;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+
+.menu-content h1 {
+  display: flex;
+  align-items: center;
+}
+
+canvas {
+  margin-top: 20px;
+  width: 30vw;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.menu-button {
+  background-color: #337ab7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.menu-button:hover {
+  background-color: #23527c;
+}
+
+#settings-tab {
+  width: 30%;
+  background-color: gainsboro;
+  padding: 5px;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 20%;
+  right: 10%;
+}
+
+#settings-tab h2 {
+  margin-bottom: 10px;
+}
+
+#multiplier-select {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+#dice-chances-range {
+  margin-bottom: 0;
+  width: 30%;
+  margin-bottom: 10px;
+}
+
+#dice-chances-label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#credits-tab {
+  background-color: gainsboro;
+  padding: 5px;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 5%;
+  right: 28%;
+}
+
+#credits-tab h2 {
+  margin-bottom: 10px;
+}
+
+#credits-tab ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#credits-tab li {
+  margin-bottom: 10px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#open-menu-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+#open-menu-button i {
+  justify-self: flex-end;
+  font-size: 40px;
+  width: 60px;
+  padding-top: 10px;
+}
+
+.audio-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+#volume-icon {
+  text-align: center;
+  font-size: 40px;
+  width: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .game {
@@ -149,11 +282,6 @@ button:active {
   border-radius: 20px;
 }
 
-canvas {
-  margin-top: 20px;
-  width: 30vw;
-}
-
 #player1 {
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
@@ -174,6 +302,27 @@ canvas {
   border-radius: 8px;
 }
 
+.multiplier-in-game {
+  color: rebeccapurple;
+
+  font-size: 30px;
+  margin-left: 10px;
+}
+
+button {
+  filter: brightness(80%);
+}
+
+button:hover {
+  filter: brightness(100%);
+  background-color: white;
+  cursor: pointer;
+}
+
+button:active {
+  filter: brightness(60%);
+}
+
 .winner {
   font-size: 150px;
   background: linear-gradient(to right, yellow, rgb(180, 255, 0));
@@ -183,58 +332,8 @@ canvas {
   filter: brightness(10%);
 }
 
-.main-menu {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 9999;
-}
-
-.menu-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  justify-content: space-evenly;
-  text-align: center;
-  width: 50%;
-  height: 80%;
-  background-color: gray;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-}
-
-.menu-content h1 {
-  display: flex;
-  align-items: center;
-}
-
-.button-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.menu-button {
-  background-color: #337ab7;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-size: 20px;
-  transition: all 0.3s ease-in-out;
-}
-
-.menu-button:hover {
-  background-color: #23527c;
+.currentPlayer {
+  filter: brightness(40%);
 }
 
 .hidden {
@@ -247,105 +346,4 @@ canvas {
 :not(.hidden) {
   opacity: 1;
   transition: opacity 0.3s ease-in;
-}
-
-/* Settings Tab */
-#settings-tab {
-  width: 30%;
-  background-color: gainsboro;
-  padding: 5px;
-  border-radius: 20px;
-  position: absolute;
-  bottom: 20%;
-  right: 10%;
-}
-
-#settings-tab h2 {
-  margin-bottom: 10px;
-}
-
-#multiplier-select {
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
-#dice-chances-range {
-  margin-bottom: 0;
-  width: 30%;
-  margin-bottom: 10px;
-}
-
-#dice-chances-label {
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-/* Credits Tab */
-#credits-tab {
-  background-color: gainsboro;
-  padding: 5px;
-  border-radius: 20px;
-  position: absolute;
-  bottom: 5%;
-  right: 28%;
-}
-
-#credits-tab h2 {
-  margin-bottom: 10px;
-}
-
-#credits-tab ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-#credits-tab li {
-  margin-bottom: 10px;
-}
-
-.navigation {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-#open-menu-button {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-  margin-right: 10px;
-}
-
-#open-menu-button i {
-  justify-self: flex-end;
-  font-size: 40px;
-  width: 60px;
-  padding-top: 10px;
-}
-
-.audio-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-  margin-right: 10px;
-}
-
-#volume-icon {
-  text-align: center;
-  font-size: 40px;
-  width: 60px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.multiplier-in-game {
-  color: rebeccapurple;
-
-  font-size: 30px;
-  margin-left: 10px;
-}
-
-.currentPlayer {
-  filter: brightness(40%);
 }
