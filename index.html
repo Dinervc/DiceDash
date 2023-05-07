@@ -57,7 +57,6 @@
             alt="Dice Dash Logo"
             width="150"
             height="75"
-            class="menuLogo"
           />
           - Main Menu
         </h1>
@@ -136,16 +135,90 @@
         </div>
       </div>
     </div>
-
     <div class="navigation">
-      <button id="open-menu-button" onclick="toggleMainMenu()">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+      <img
+        src="resources/diceDashLogoLight.png"
+        alt="Dice Dash Light Logo"
+        width="150"
+      />
       <div class="audio-container">
         <button onclick="switchSound()">
           <i class="fa-solid fa-volume-xmark" id="volume-icon"></i>
         </button>
       </div>
+      <button class="info-container" onclick="displayInfo()">
+        <i class="fa-solid fa-info"></i>
+      </button>
+      <div id="info-tab" class="hidden">
+        <h2>
+          <img
+            src="resources/DiceDashLogoBlack.png"
+            alt="Dice Dash Logo"
+            width="100"
+            height="50"
+            class="infoLogo"
+          />
+          <span>- Info</span>
+        </h2>
+
+        <h4>Getting Started</h4>
+        To play the game, simply open the index.html file in your web browser.
+        The game should be playable on any modern web browser.
+
+        <h4>How to Play (base settings)</h4>
+        On each turn, a player rolls a six-sided dice. If the player rolls a 1,
+        their turn ends and they score no points for that turn. If the player
+        rolls a number other than 1, the number is added to their turn score.
+        The player can then choose to either end their turn and add their turn
+        score to their total score, or they can choose to roll the die again to
+        try to increase their turn score. If a player reaches a score of 100 or
+        more at the end of their turn, they win the game. The Wikipedia page for
+        Pig Dice can be found
+        <a href="https://en.wikipedia.org/wiki/Pig_(dice_game)">here</a>.
+
+        <h4>Features</h4>
+        Dice Dash includes the following features:
+        <li>Simple and intuitive user interface</li>
+        <li>Two-player support</li>
+        <li>Randomized dice rolls using JavaScript's Math.random() function</li>
+        <li>Turn-based gameplay with the ability to hold and score points</li>
+        <li>Win detection and game-over state</li>
+
+        <h4>Technologies Used</h4>
+        The Pig Dice game was implemented using the following technologies:
+        <li>HTML & CSS</li>
+        <li>JavaScript</li>
+
+        <h4>Future Improvements</h4>
+        Some possible improvements to Dice Dash include:
+        <li>
+          Implementing a scoring system that rewards more points for rolling
+          multiple dice of the same number (e.g., rolling three 4's is worth
+          more than rolling a single 4)
+        </li>
+        <li>
+          <strike
+            >Allowing the user to customize the winning score or other game
+            parameters</strike
+          ><strong> [SOLVED]</strong>
+        </li>
+        <li>Creating an AI opponent for single-player gameplay</li>
+
+        <h4>License</h4>
+        This project is licensed under the MIT License. See the LICENSE file for
+        details.
+
+        <h4>Acknowledgments</h4>
+        Dice Dash was inspired by the classic dice game Pig Dice. Thanks to John
+        Scarne who contributed to the development of the original game in 1945.
+
+        <h4>GitHub</h4>
+        This game can be found on my
+        <a href="https://github.com/Dinervc/Dice-Dash">GitHub</a>.
+      </div>
+      <button id="open-menu-button" onclick="toggleMainMenu()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
     <div class="game">
       <div class="player-container" id="player1">

@@ -143,21 +143,12 @@ canvas {
 
 .navigation {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: right;
+  padding: 10px;
 }
 
-#open-menu-button {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-  margin-right: 10px;
-}
-
-#open-menu-button i {
-  justify-self: flex-end;
-  font-size: 40px;
-  width: 60px;
-  padding-top: 10px;
+.navigation > img {
+  margin-right: auto;
 }
 
 .audio-container {
@@ -173,6 +164,67 @@ canvas {
   width: 60px;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.info-container {
+  margin-top: 10px;
+  margin-right: 10px;
+  text-align: center;
+  font-size: 50px;
+  width: 65px;
+  height: 65px;
+  color: black;
+}
+
+#info-tab {
+  background-color: gainsboro;
+  filter: brightness(85%);
+  padding: 5px;
+  border-radius: 20px;
+  margin-right: 4%;
+  margin-top: 5%;
+  width: 90%;
+  height: 87.5%;
+  position: absolute;
+  z-index: 999999;
+  padding: 25px;
+  padding-top: 5px;
+  font-size: 20px;
+}
+
+#info-tab h2 {
+  font-size: 40px;
+  text-align: center;
+}
+
+#info-tab span {
+  vertical-align: middle;
+  line-height: 75px;
+}
+
+.infoLogo {
+  vertical-align: middle;
+}
+
+#info-tab h4 {
+  font-size: 30px;
+  padding-bottom: 10px;
+  margin-bottom: 3px;
+  margin-top: 5px;
+}
+
+#open-menu-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+#open-menu-button i {
+  justify-self: flex-end;
+  font-size: 40px;
+  width: 60px;
+  padding-top: 10px;
 }
 
 .game {

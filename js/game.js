@@ -222,10 +222,18 @@ function toggleMainMenu() {
   if (!document.querySelector("#settings-tab").classList.contains("hidden")) {
     toggleSettingsTab();
   }
+  if (!document.querySelector("#info-tab").classList.contains("hidden")) {
+    document.querySelector("#info-tab").classList.toggle("hidden");
+  }
   if (!document.querySelector("#credits-tab").classList.contains("hidden")) {
     displayCredits();
   }
   return !document.querySelector("#credits-tab").classList.contains("hidden")
     ? displayCredits()
     : null;
+}
+
+function displayInfo() {
+  const creditsTab = document.querySelector("#info-tab");
+  return creditsTab ? creditsTab.classList.toggle("hidden") : null;
 }
