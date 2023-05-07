@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         var diceMaterial = new BABYLON.StandardMaterial("diceMaterial", scene);
         diceMaterial.diffuseTexture = new BABYLON.Texture(
-          "resources/diceTexture.png",
+          "resources/diceTexture.webp",
           scene
         );
         diceMaterial.diffuseTexture.uScale = 0.1;
