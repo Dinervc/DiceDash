@@ -1,5 +1,9 @@
 "use strict";
 
+window.addEventListener("DOMContentLoaded", (event) => {
+  checkGamePlaying();
+});
+
 const NUM_PLAYERS = 2;
 const DICE_CLASSES = {
   2: "two",
@@ -8,15 +12,29 @@ const DICE_CLASSES = {
   5: "five",
   6: "six",
 };
+const CHANCE_VALUES = {
+  0: "1/6",
+  1: "1/3",
+  2: "1/2",
+  3: "5/6",
+};
 
 let winningScore = 100;
 let currentPlayer = 1;
 let scores = [0, 0];
-let roundScore = 0;
+let turnScore = 0;
 let gamePlaying = false;
 let diceMesh;
 let multiplier = 1;
 let diceChance = [1, 6];
+
+function startNewGame() {
+  newGame();
+
+  toggleMainMenu();
+  updateTurnScoreUI();
+  updateScoresUI();
+}
 
 function newGame() {
   if (scores[0] !== 0 || scores[1] !== 0) {
@@ -27,10 +45,10 @@ function newGame() {
   document.querySelector(".latest-dice-throw i").className =
     "fa-solid fa-dice-d6";
   scores = [0, 0];
-  roundScore = 0;
+  turnScore = 0;
   currentPlayer = Math.floor(Math.random() * 2) + 1;
   gamePlaying = true;
-  highlightCurrentPlayer();
+  highlightCurrentPlayerUI();
   updateDiceMultiplier();
   updateScoresUI();
 }
@@ -44,132 +62,105 @@ function rollDice() {
     document.querySelector(".latest-dice-throw i").className =
       "fa-solid fa-dice-" + DICE_CLASSES[diceValue];
 
-    roundScore += diceValue * multiplier;
+    turnScore += diceValue * multiplier;
 
     consequencesOfRoll(diceValue);
   }
 }
 
 function calculateRandomDiceRoll() {
-  if (Math.random() < diceChance[0] / diceChance[1]) {
-    return 1;
-  }
-  return Math.floor(Math.random() * 5) + 2;
+  return Math.random() < diceChance[0] / diceChance[1]
+    ? 1
+    : Math.floor(Math.random() * 5) + 2;
 }
 
 function consequencesOfRoll(diceValue) {
   if (diceValue === 1) {
     failSound();
 
-    roundScore = 0;
+    turnScore = 0;
 
     document.querySelector(".latest-dice-throw i").className =
       "fa-solid fa-dice-d6";
     switchPlayers();
+    updateScoresUI();
   }
-  updateRoundScoreUI();
+  updateTurnScoreUI();
 }
 
 function holdScore() {
-  if (roundScore === 0 || !gamePlaying) {
+  if (turnScore === 0 || !gamePlaying) {
     return;
   }
 
   holdScoreSound();
 
-  scores[currentPlayer - 1] += roundScore;
-  roundScore = 0;
+  scores[currentPlayer - 1] += turnScore;
+  turnScore = 0;
 
   if (scores[currentPlayer - 1] >= winningScore) {
     const winner = document.querySelector(`#player${currentPlayer}`);
-
     winner.classList.add("winner");
-
     document.querySelector(".latest-dice-throw i").className =
       "fa-solid fa-crown";
 
-    gamePlaying = false;
-  } else {
-    document.querySelector(".latest-dice-throw i").className =
-      "fa-solid fa-dice-d6";
-    switchPlayers();
+    updateScoresUI();
+    return (gamePlaying = false);
   }
 
+  document.querySelector(".latest-dice-throw i").className =
+    "fa-solid fa-dice-d6";
+  switchPlayers();
   updateScoresUI();
 }
 
 function switchPlayers() {
-  roundScore = 0;
+  turnScore = 0;
   currentPlayer = currentPlayer === 1 ? 2 : 1;
-  highlightCurrentPlayer();
-  updateRoundScoreUI();
+  highlightCurrentPlayerUI();
+  updateTurnScoreUI();
 }
 
-function highlightCurrentPlayer() {
-  if (currentPlayer === 1 ? true : false) {
+function highlightCurrentPlayerUI() {
+  if (currentPlayer === 1) {
     document.querySelector("#player1").classList.remove("currentPlayer");
-    document.querySelector("#player2").classList.add("currentPlayer");
-  } else {
-    document.querySelector("#player2").classList.remove("currentPlayer");
-    document.querySelector("#player1").classList.add("currentPlayer");
+    return document.querySelector("#player2").classList.add("currentPlayer");
   }
+  document.querySelector("#player2").classList.remove("currentPlayer");
+  document.querySelector("#player1").classList.add("currentPlayer");
 }
 
 function updateScoresUI() {
-  // Current player scores
-  document.querySelector(`#player${currentPlayer} .player-score`).textContent =
-    scores[currentPlayer - 1];
-  document.querySelector(
-    `#player${currentPlayer} .player-current-score`
-  ).textContent = roundScore;
-
-  // Reset other player scores
-  document.querySelector(
-    `#player${currentPlayer === 1 ? 2 : 1} .player-score`
-  ).textContent = scores[currentPlayer === 1 ? 1 : 0];
-  document.querySelector(
-    `#player${currentPlayer === 1 ? 2 : 1} .player-current-score`
-  ).textContent = 0;
+  scoreUpdater(currentPlayer);
+  scoreUpdater(currentPlayer === 1 ? 2 : 1);
 }
 
-function updateRoundScoreUI() {
+function scoreUpdater(selectedPlayer) {
+  document.querySelector(`#player${selectedPlayer} .player-score`).textContent =
+    scores[selectedPlayer - 1];
   document.querySelector(
-    `#player${currentPlayer} .player-current-score`
-  ).textContent = roundScore;
+    `#player${selectedPlayer} .player-current-score`
+  ).textContent = turnScore;
 }
 
-window.addEventListener("DOMContentLoaded", (event) => {
-  checkGamePlaying();
-});
+function updateTurnScoreUI() {
+  document.querySelector(
+    `#player${currentPlayer} .player-current-score`
+  ).textContent = turnScore;
+}
 
 function checkGamePlaying() {
-  if (gamePlaying) {
-    document.querySelector("#continue-button").classList.remove("hidden");
-  } else {
-    document.querySelector("#continue-button").classList.add("hidden");
-  }
+  return gamePlaying
+    ? document.querySelector("#continue-button").classList.remove("hidden")
+    : document.querySelector("#continue-button").classList.add("hidden");
 }
 
-// Function to continue the game
 function continueGame() {
-  // Update the UI
-  updateScoresUI();
-  updateRoundScoreUI();
   toggleMainMenu();
+  updateTurnScoreUI();
+  updateScoresUI();
 }
 
-// Function to start a new game
-function startNewGame() {
-  // Reset the game variables
-  newGame();
-
-  // Update the UI
-  updateScoresUI();
-  updateRoundScoreUI();
-  toggleMainMenu();
-}
-
-// Function to toggle the settings tab
 function toggleSettingsTab() {
   if (!document.querySelector("#credits-tab").classList.contains("hidden")) {
     displayCredits();
@@ -181,13 +172,13 @@ function toggleSettingsTab() {
 function updateWinningScore() {
   const value = document.querySelector("#winning-score-input").value;
   winningScore = value;
+  const multiplierDOM = document.querySelector("#multiplier-select");
   if (value >= 500) {
-    document.querySelector("#multiplier-select").options[3].disabled = false;
-    document.querySelector("#multiplier-select").value = "1";
-  } else {
-    document.querySelector("#multiplier-select").options[3].disabled = true;
-    document.querySelector("#multiplier-select").value = "1";
+    multiplierDOM.options[3].disabled = false;
+    return (multiplierDOM.value = "1");
   }
+  multiplierDOM.options[3].disabled = true;
+  multiplierDOM.value = "1";
 }
 
 function updateDiceMultiplier() {
@@ -199,23 +190,17 @@ function updateDiceMultiplier() {
   }
 }
 
-const chanceClasses = {
-  0: "1/6",
-  1: "1/3",
-  2: "1/2",
-  3: "5/6",
-};
-
 function updateOneChance() {
   const multiplierSelected = document.querySelector(
     "#dice-chances-range"
   ).value;
   const zaehler = parseInt(
-    chanceClasses[parseInt(multiplierSelected)].charAt(0)
+    CHANCE_VALUES[parseInt(multiplierSelected)].charAt(0)
   );
   const nenner = parseInt(
-    chanceClasses[parseInt(multiplierSelected)].charAt(2)
+    CHANCE_VALUES[parseInt(multiplierSelected)].charAt(2)
   );
+
   document.querySelector(
     "#dice-chances-label"
   ).textContent = `(${zaehler}/${nenner}%)`;
@@ -228,9 +213,7 @@ function displayCredits() {
     toggleSettingsTab();
   }
   const creditsTab = document.querySelector("#credits-tab");
-  if (creditsTab) {
-    creditsTab.classList.toggle("hidden");
-  }
+  return creditsTab ? creditsTab.classList.toggle("hidden") : null;
 }
 
 function toggleMainMenu() {
@@ -242,4 +225,7 @@ function toggleMainMenu() {
   if (!document.querySelector("#credits-tab").classList.contains("hidden")) {
     displayCredits();
   }
+  return !document.querySelector("#credits-tab").classList.contains("hidden")
+    ? displayCredits()
+    : null;
 }

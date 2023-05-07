@@ -183,7 +183,6 @@ canvas {
   filter: brightness(10%);
 }
 
-/* Main Menu */
 .main-menu {
   display: flex;
   justify-content: center;
